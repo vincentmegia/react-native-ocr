@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar, TouchableOpacity, View } from 'react-native';
 import { Header as HeaderRNE, Icon, Text } from '@rneui/themed';
 import styles from '../../globalStyles';
@@ -13,17 +13,31 @@ import {
 } from 'react-native-image-picker';
 import TextRecognition from '@react-native-ml-kit/text-recognition';
 import { createTextProcessor } from '../../textProcessor';
+import { GlobalContext } from '../../App';
 
-const Home = () => {
+const Home = ({ route }: any) => {
   const [info, setInfo] = useState<Info>(createInfo());
   const [log, setLog] = useState('');
   const navigation = useNavigation<any>();
+
+  console.log('route info: ', route);
+
+  useEffect(() => {
+    console.log('info datA: ', info);
+    if (!route.params) return;
+    console.log('processing data');
+    const tokens = route.params.split('\n');
+    const processor = createTextProcessor(tokens);
+    const processResult = processor.process() || createInfo();
+    setInfo(processResult);
+  }, [route]);
 
   const process = async (imageResult: ImagePickerResponse) => {
     if (!imageResult) {
       return;
     }
     const assets = imageResult?.assets || [];
+    console.log('asset uri: ', assets[0].uri);
     const result = await TextRecognition.recognize(assets[0].uri || '');
     console.log('------- result.text: ', result.text);
     setLog(result.text);
@@ -43,8 +57,10 @@ const Home = () => {
   };
 
   const onCameraPress = async () => {
+    console.log('navigating to camera');
     setInfo(createInfo());
     navigation.navigate('Camera');
+
     // const imageResult = await launchCamera({
     //    presentationStyle: "fullScreen",
     //    mediaType: "mixed",

@@ -4,7 +4,6 @@ import styles from './styles';
 import { useAspectRatio } from '../../../hooks/aspectRatio';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import Loader from '../../loader';
-import CameraRoll from '@react-native-community/cameraroll';
 import { Button, Overlay } from '@rneui/themed';
 import { Image } from '@rneui/base';
 import images from '../../../assets/images';
@@ -20,8 +19,8 @@ const IOSCamera = () => {
   const onPress = async () => {
     console.log('helllooooo');
     const photo = await cameraRef?.current?.takePhoto();
-    const saveCamera = await CameraRoll.save(photo?.path || '');
-    console.log('saving photo...', saveCamera);
+    // const saveCamera = await CameraRoll.save(photo?.path || '');
+    // console.log('saving photo...', saveCamera);
   };
 
   return (

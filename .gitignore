@@ -3,6 +3,9 @@ node_modules
 # android
 **/.gradle
 **/android/app/src/debug
+**/build
+**/local.properties
+**/.idea
 
 # ios
 **/Pods

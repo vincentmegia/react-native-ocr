@@ -8,6 +8,7 @@ const Stack = createNativeStackNavigator();
 export const Navigation = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen
         name="Camera"
         component={Camera}
@@ -18,7 +19,6 @@ export const Navigation = () => {
           },
         }}
       />
-      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 };
